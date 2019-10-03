@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "workspaces": [
+    "getting-started"
+  ],
+  "name": "passport-next-auth-tutorial",
+  "version": "1.0.0",
+  "keywords": [],
+  "author": "Jon Preece",
+  "license": "MIT"
+}
