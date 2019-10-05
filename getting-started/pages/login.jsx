@@ -1,17 +1,17 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import Box from "@material-ui/core/Box";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import Paper from "@material-ui/core/Paper";
+import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import Button from '@material-ui/core/Button'
+import Box from '@material-ui/core/Box'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import Typography from '@material-ui/core/Typography'
+import TextField from '@material-ui/core/TextField'
+import Paper from '@material-ui/core/Paper'
 
 const useStyles = makeStyles(theme => ({
   layout: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center"
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
   },
   paper: {
     padding: theme.spacing(2),
@@ -24,21 +24,22 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(3, 0, 3)
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1)
   },
   buttonProgress: {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
     marginTop: -12,
     marginLeft: -12
   }
-}));
+}))
 
 const LoginForm = () => {
-  const classes = useStyles({});
-  const [submitting, setSubmitting] = React.useState(false);
+  const classes = useStyles({})
+  const [formData, setFormData] = React.useState({ email: '', password: '' })
+  const [submitting, setSubmitting] = React.useState(false)
 
   return (
     <main className={classes.layout}>
@@ -66,6 +67,8 @@ const LoginForm = () => {
             name="email"
             autoComplete="email"
             autoFocus
+            defaultValue={formData.email}
+            onChange={e => setFormData({ ...formData, email: e.target.value })}
           />
           <TextField
             margin="normal"
@@ -76,8 +79,9 @@ const LoginForm = () => {
             type="password"
             id="password"
             autoComplete="current-password"
+            defaultValue={formData.email}
+            onChange={e => setFormData({ ...formData, email: e.target.value })}
           />
-
           <Box mb={6}>
             <Button
               disabled={submitting}
@@ -88,18 +92,15 @@ const LoginForm = () => {
               className={classes.submit}
             >
               {submitting && (
-                <CircularProgress
-                  size={24}
-                  className={classes.buttonProgress}
-                />
+                <CircularProgress size={24} className={classes.buttonProgress} />
               )}
-              {submitting ? "Signing in..." : "Sign In"}
+              {submitting ? 'Signing in...' : 'Sign In'}
             </Button>
           </Box>
         </form>
       </Paper>
     </main>
-  );
-};
+  )
+}
 
-export default LoginForm;
+export default LoginForm

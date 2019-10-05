@@ -1,18 +1,18 @@
 import React from 'react'
-import Typography from '@material-ui/core/Typography'
-import Box from '@material-ui/core/Box'
 import { makeStyles } from '@material-ui/core/styles'
-import Paper from '@material-ui/core/Paper'
-import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
+import Box from '@material-ui/core/Box'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import Typography from '@material-ui/core/Typography'
+import TextField from '@material-ui/core/TextField'
+import Paper from '@material-ui/core/Paper'
+import { server } from '../utils'
 
 const useStyles = makeStyles(theme => ({
   layout: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
-    maxWidth: '768px',
-    margin: '0 auto'
+    alignItems: 'center'
   },
   paper: {
     padding: theme.spacing(2),
@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
     }
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
+    margin: theme.spacing(3, 0, 3)
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -37,15 +37,24 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const Register = () => {
+const LoginForm = () => {
   const classes = useStyles({})
-  const [formData, setFormData] = React.useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: ''
-  })
+  const [formData, setFormData] = React.useState({ email: '', password: '' })
   const [submitting, setSubmitting] = React.useState(false)
+
+  const handleSubmit = async e => {
+    e.preventDefault()
+    const { email, password } = formData
+    const { success, data } = await server.postAsync('/auth/login', {
+      email,
+      password
+    })
+
+    if (success) {
+      window.location.replace(data)
+      return
+    }
+  }
 
   return (
     <main className={classes.layout}>
@@ -57,33 +66,13 @@ const Register = () => {
           flexDirection="column"
         >
           <Typography component="h1" variant="h4" gutterBottom>
-            Register
+            Login
+          </Typography>
+          <Typography component="p" gutterBottom>
+            Log in to your account dashboard
           </Typography>
         </Box>
-        <form method="post" className={classes.form} noValidate>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="firstName"
-            label="First Name"
-            name="firstName"
-            autoComplete="fname"
-            autoFocus
-            defaultValue={formData.firstName}
-            onChange={e => setFormData({ ...formData, firstName: e.target.value })}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="lastName"
-            label="Last Name"
-            name="lastName"
-            autoComplete="lname"
-            defaultValue={formData.lastName}
-            onChange={e => setFormData({ ...formData, lastName: e.target.value })}
-          />
+        <form method="post" className={classes.form} onSubmit={handleSubmit} noValidate>
           <TextField
             margin="normal"
             required
@@ -92,6 +81,7 @@ const Register = () => {
             label="Email Address"
             name="email"
             autoComplete="email"
+            autoFocus
             defaultValue={formData.email}
             onChange={e => setFormData({ ...formData, email: e.target.value })}
           />
@@ -103,7 +93,7 @@ const Register = () => {
             label="Password"
             type="password"
             id="password"
-            autoComplete="new-password"
+            autoComplete="current-password"
             defaultValue={formData.password}
             onChange={e => setFormData({ ...formData, password: e.target.value })}
           />
@@ -119,7 +109,7 @@ const Register = () => {
               {submitting && (
                 <CircularProgress size={24} className={classes.buttonProgress} />
               )}
-              {submitting ? 'Registering...' : 'Register'}
+              {submitting ? 'Signing in...' : 'Sign In'}
             </Button>
           </Box>
         </form>
@@ -128,4 +118,4 @@ const Register = () => {
   )
 }
 
-export default Register
+export default LoginForm

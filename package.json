@@ -1,7 +1,8 @@
 {
   "private": true,
   "workspaces": [
-    "getting-started"
+    "getting-started",
+    "passport-jwt-mongo"
   ],
   "name": "passport-next-auth-tutorial",
   "version": "1.0.0",
