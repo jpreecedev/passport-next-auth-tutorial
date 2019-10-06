@@ -3,7 +3,8 @@
   "workspaces": [
     "getting-started",
     "passport-jwt-mongo",
-    "passport-google-oauth-strategy"
+    "passport-google-oauth-strategy",
+    "passport-facebook-strategy"
   ],
   "name": "passport-next-auth-tutorial",
   "version": "1.0.0",
