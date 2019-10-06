@@ -45,7 +45,7 @@ router.post('/register', async (req, res) => {
   } else if (password.length < 5 || password.length > 20) {
     return res.status(500).json({
       success: false,
-      data: 'Password must be between 5 and a 20 characters.'
+      data: 'Password must be between 5 and 20 characters.'
     })
   }
 

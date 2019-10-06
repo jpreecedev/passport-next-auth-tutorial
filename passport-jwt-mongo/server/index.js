@@ -5,9 +5,9 @@ import next from 'next'
 import { urlencoded, json } from 'body-parser'
 import cookieParser from 'cookie-parser'
 import passport from 'passport'
-import { connectToDatabase } from './database/connection'
 
 import router from './router'
+import { connectToDatabase } from './database/connection'
 import { initialiseAuthentication } from './auth'
 
 const dev = process.env.NODE_ENV !== 'production'
@@ -16,7 +16,7 @@ const handle = nextApp.getRequestHandler()
 
 const port = 3000
 
-nextApp.prepare().then(() => {
+nextApp.prepare().then(async () => {
   const app = express()
 
   app.get('/my-custom-route', (req, res) =>
@@ -35,9 +35,8 @@ nextApp.prepare().then(() => {
   app.get('*', (req, res) => {
     return handle(req, res)
   })
-  ;(async () => {
-    await connectToDatabase()
-  })()
+
+  await connectToDatabase()
 
   app.listen(port, err => {
     if (err) throw err

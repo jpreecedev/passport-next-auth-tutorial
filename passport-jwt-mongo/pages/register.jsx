@@ -76,7 +76,7 @@ const Register = () => {
             Register
           </Typography>
         </Box>
-        <form method="post" className={classes.form} onSubmit={handleSubmit} noValidate>
+        <form method="post" className={classes.form} noValidate onSubmit={handleSubmit}>
           <TextField
             margin="normal"
             required
