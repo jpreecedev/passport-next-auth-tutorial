@@ -29,7 +29,6 @@ const strategy = app => {
         lastName: profile.name.familyName,
         displayName: profile.displayName,
         email: profile.emails[0].value,
-        role: UserRoles.Customer,
         password: null
       })
     )
