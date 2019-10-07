@@ -4,7 +4,8 @@
     "getting-started",
     "passport-jwt-mongo",
     "passport-google-oauth-strategy",
-    "passport-facebook-strategy"
+    "passport-facebook-strategy",
+    "passport-role-based-authorisation"
   ],
   "name": "passport-next-auth-tutorial",
   "version": "1.0.0",
