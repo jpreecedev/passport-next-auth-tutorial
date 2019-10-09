@@ -3,7 +3,7 @@ import passportFacebook from 'passport-facebook'
 import { to } from 'await-to-js'
 
 import { getUserByProviderId, createUser } from '../../database/user'
-import { signToken } from '../utils'
+import { signToken, getRedirectUrl } from '../utils'
 import { ROLES } from '../../../utils'
 
 const FacebookStrategy = passportFacebook.Strategy
@@ -51,7 +51,7 @@ const strategy = app => {
         .cookie('jwt', signToken(req.user), {
           httpOnly: true
         })
-        .redirect('/')
+        .redirect(getRedirectUrl(req.user.role))
     }
   )
 

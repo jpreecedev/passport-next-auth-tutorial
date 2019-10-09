@@ -2,6 +2,7 @@ import passport from 'passport'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import { UserModel } from '../database/schema'
+import { ROLES } from '../../utils'
 
 const setup = () => {
   passport.serializeUser((user, done) => done(null, user._id))
@@ -48,4 +49,15 @@ const checkIsInRole = (...roles) => (req, res, next) => {
   return next()
 }
 
-export { setup, signToken, hashPassword, verifyPassword, checkIsInRole }
+const getRedirectUrl = role => {
+  switch (role) {
+    case ROLES.Admin:
+      return '/admin-dashboard'
+    case ROLES.Customer:
+      return '/customer-dashboard'
+    default:
+      return '/'
+  }
+}
+
+export { setup, signToken, hashPassword, verifyPassword, checkIsInRole, getRedirectUrl }
