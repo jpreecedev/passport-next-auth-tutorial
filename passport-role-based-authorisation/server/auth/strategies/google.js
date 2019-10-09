@@ -3,7 +3,7 @@ import passportGoogle from 'passport-google-oauth'
 import { to } from 'await-to-js'
 
 import { getUserByProviderId, createUser } from '../../database/user'
-import { signToken } from '../utils'
+import { signToken, getRedirectUrl } from '../utils'
 import { ROLES } from '../../../utils'
 
 const GoogleStrategy = passportGoogle.OAuth2Strategy
@@ -61,7 +61,7 @@ const strategy = app => {
         .cookie('jwt', signToken(req.user), {
           httpOnly: true
         })
-        .redirect('/')
+        .redirect(getRedirectUrl(req.user.role))
     }
   )
 
