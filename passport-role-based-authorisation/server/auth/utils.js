@@ -2,7 +2,6 @@ import passport from 'passport'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import { UserModel } from '../database/schema'
-import { ROLES } from '../../utils'
 
 const setup = () => {
   passport.serializeUser((user, done) => done(null, user._id))
@@ -40,8 +39,6 @@ const checkIsInRole = (...roles) => (req, res, next) => {
   if (!req.user) {
     return res.redirect('/login')
   }
-
-  console.log(roles, req.user.role)
 
   const hasRole = roles.find(role => req.user.role === role)
   if (!hasRole) {

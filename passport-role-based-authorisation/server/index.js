@@ -20,16 +20,6 @@ const port = 3000
 nextApp.prepare().then(async () => {
   const app = express()
 
-  const handleAuthenticatedRoute = (method, route, ...roles) =>
-    app[method](
-      route,
-      passport.authenticate('jwt', { failureRedirect: '/login' }),
-      utils.checkIsInRole(...roles),
-      (req, res) => {
-        return handle(req, res)
-      }
-    )
-
   app.use(urlencoded({ extended: true }))
   app.use(json())
   app.use(cookieParser())
@@ -39,9 +29,32 @@ nextApp.prepare().then(async () => {
   router(app)
   initialiseAuthentication(app)
 
-  handleAuthenticatedRoute('get', '/admin-dashboard', ROLES.Admin)
-  handleAuthenticatedRoute('get', '/customer-dashboard', ROLES.Customer)
-  handleAuthenticatedRoute('get', '/both-dashboard', ROLES.Admin, ROLES.Customer)
+  app.get(
+    '/admin-dashboard',
+    passport.authenticate('jwt', { failureRedirect: '/login' }),
+    utils.checkIsInRole(ROLES.Admin),
+    (req, res) => {
+      return handle(req, res)
+    }
+  )
+
+  app.get(
+    '/customer-dashboard',
+    passport.authenticate('jwt', { failureRedirect: '/login' }),
+    utils.checkIsInRole(ROLES.Customer),
+    (req, res) => {
+      return handle(req, res)
+    }
+  )
+
+  app.get(
+    '/both-dashboard',
+    passport.authenticate('jwt', { failureRedirect: '/login' }),
+    utils.checkIsInRole(ROLES.Admin, ROLES.Customer),
+    (req, res) => {
+      return handle(req, res)
+    }
+  )
 
   app.get('*', (req, res) => {
     return handle(req, res)

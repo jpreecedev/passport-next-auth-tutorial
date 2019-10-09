@@ -7,6 +7,7 @@ const initialiseAuthentication = app => {
   utils.setup()
 
   pipe(
+    strategies.FacebookStrategy,
     strategies.GoogleStrategy,
     strategies.JWTStrategy
   )(app)
