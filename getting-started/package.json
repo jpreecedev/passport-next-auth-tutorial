@@ -10,7 +10,7 @@
   "dependencies": {
     "@material-ui/core": "^4.4.3",
     "express": "^4.17.1",
-    "next": "9.3.3",
+    "next": "11.1.0",
     "react": "^16.10.1",
     "react-dom": "^16.10.1"
   },
